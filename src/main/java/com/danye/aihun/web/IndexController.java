@@ -1,4 +1,4 @@
-package com.danye.qiaomianguan.qiaomianguan.web;
+package com.danye.aihun.web;
 
 import org.springframework.stereotype.Controller;
 
