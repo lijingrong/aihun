@@ -16,9 +16,8 @@ public class IndexController {
     private ContactService contactService;
 
     @RequestMapping("/")
-    @ResponseBody
-    public ResponseCode index() {
-        return ResponseCode.SUCCESS;
+    public String index() {
+        return "index";
     }
 
     @RequestMapping("/addContact")
