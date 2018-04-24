@@ -1,4 +1,3 @@
-USE aihun;
 DROP TABLE IF EXISTS t_contact;
 
 CREATE TABLE t_contact (
