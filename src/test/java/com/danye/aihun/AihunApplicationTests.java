@@ -4,12 +4,14 @@ import com.danye.aihun.model.Contact;
 import com.danye.aihun.model.GameTeam;
 import com.danye.aihun.service.ContactRepository;
 import com.danye.aihun.service.GameTeamRepository;
+import com.danye.aihun.service.GameTeamService;
 import com.danye.aihun.utils.OSSUtil;
 import com.danye.aihun.utils.QRCodeUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -23,7 +25,7 @@ public class AihunApplicationTests {
     @Autowired
     private ContactRepository contactRepository;
     @Autowired
-    private GameTeamRepository gameTeamRepository;
+    private GameTeamService gameTeamService;
 
     @Test
     public void contextLoads() {
@@ -49,10 +51,12 @@ public class AihunApplicationTests {
 
     @Test
     public void addGameTeam(){
+        String uid = UUID.randomUUID().toString();
         GameTeam gameTeam = new GameTeam();
         gameTeam.setId(UUID.randomUUID().toString());
-        gameTeam.setUid(UUID.randomUUID().toString());
+        gameTeam.setUid(uid);
         gameTeam.setFollowId(UUID.randomUUID().toString());
-        gameTeamRepository.save(gameTeam);
+        gameTeamService.save(gameTeam);
+        gameTeamService.getLatestGameTeamByUid(uid);
     }
 }

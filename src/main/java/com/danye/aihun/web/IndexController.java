@@ -5,10 +5,12 @@ import com.danye.aihun.model.GameTeam;
 import com.danye.aihun.model.ResponseCode;
 import com.danye.aihun.service.ContactService;
 import com.danye.aihun.service.GameTeamRepository;
+import com.danye.aihun.service.GameTeamService;
 import com.danye.aihun.utils.OSSUtil;
 import com.danye.aihun.utils.QRCodeUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +27,7 @@ public class IndexController {
     @Autowired
     private ContactService contactService;
     @Autowired
-    private GameTeamRepository gameTeamRepository;
+    private GameTeamService gameTeamService;
 
     @RequestMapping("/")
     public String index() {
@@ -56,7 +58,7 @@ public class IndexController {
         GameTeam gameTeam = new GameTeam();
         gameTeam.setId(UUID.randomUUID().toString());
         gameTeam.setUid(uid);
-        gameTeamRepository.save(gameTeam);
+        gameTeamService.save(gameTeam);
         Map<String, String> result = new HashMap<>();
         result.put("imgUrl", "http://aihun-img.oss-cn-shanghai.aliyuncs.com/" + imgName);
         return result;
@@ -70,7 +72,7 @@ public class IndexController {
             result.put("code", 0);
             return result;
         }
-        GameTeam gameTeam = gameTeamRepository.getGameTeamByUid(uid);
+        GameTeam gameTeam = gameTeamService.getLatestGameTeamByUid(uid);
         if (gameTeam == null) {
             result.put("code", 0);
             //todo:设置当前用户ID
@@ -78,7 +80,7 @@ public class IndexController {
         } else {
             //todo
             gameTeam.setFollowId(UUID.randomUUID().toString());
-            gameTeamRepository.save(gameTeam);
+            gameTeamService.save(gameTeam);
             result.put("code", 1);
             result.put("data", gameTeam);
         }
