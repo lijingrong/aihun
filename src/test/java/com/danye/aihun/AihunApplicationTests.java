@@ -1,7 +1,9 @@
 package com.danye.aihun;
 
 import com.danye.aihun.model.Contact;
+import com.danye.aihun.model.GameTeam;
 import com.danye.aihun.service.ContactRepository;
+import com.danye.aihun.service.GameTeamRepository;
 import com.danye.aihun.utils.OSSUtil;
 import com.danye.aihun.utils.QRCodeUtil;
 import org.junit.Test;
@@ -11,6 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.UUID;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("dev")
@@ -18,6 +22,8 @@ public class AihunApplicationTests {
 
     @Autowired
     private ContactRepository contactRepository;
+    @Autowired
+    private GameTeamRepository gameTeamRepository;
 
     @Test
     public void contextLoads() {
@@ -41,4 +47,12 @@ public class AihunApplicationTests {
 
     }
 
+    @Test
+    public void addGameTeam(){
+        GameTeam gameTeam = new GameTeam();
+        gameTeam.setId(UUID.randomUUID().toString());
+        gameTeam.setUid(UUID.randomUUID().toString());
+        gameTeam.setFollowId(UUID.randomUUID().toString());
+        gameTeamRepository.save(gameTeam);
+    }
 }
