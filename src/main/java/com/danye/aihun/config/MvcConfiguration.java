@@ -1,12 +1,26 @@
 package com.danye.aihun.config;
 
+import com.danye.aihun.utils.WXAuthLoginInterceptor;
+import com.danye.aihun.utils.WXBrowserInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
+    @Autowired
+    private WXAuthLoginInterceptor wxAuthLoginInterceptor;
+    @Autowired
+    private WXBrowserInterceptor wxBrowserInterceptor;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(wxAuthLoginInterceptor).addPathPatterns("/");
+        registry.addInterceptor(wxBrowserInterceptor).addPathPatterns("/**").excludePathPatterns("/noWechat");
+    }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
