@@ -44,70 +44,70 @@
 <canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="0"></canvas>
 <div id="splash">
     <div class="progress-bar stripes">
-        <span style="width: 0%"></span>
+        <span style="width: 0"></span>
     </div>
 </div>
 <script th:src="@{/src/settings.js}" charset="utf-8"></script>
 
 <script th:src="@{/main.js}" charset="utf-8"></script>
 
-<!--<script th:src="@{http://res.wx.qq.com/open/js/jweixin-1.2.0.js}"></script>-->
+<script th:src="@{http://res.wx.qq.com/open/js/jweixin-1.2.0.js}"></script>
 
-<!--<script th:insert="javascript">-->
-    <!--//调用微信api-->
-    <!--wx.config({-->
-        <!--debug: true,-->
-        <!--appId: '[(${config_appId})]',-->
-        <!--timestamp: '[(${config_timestamp})]',-->
-        <!--nonceStr: '[(${config_nonceStr})]',-->
-        <!--signature: '[(${config_signature})]',-->
-        <!--jsApiList: [-->
-            <!--'onMenuShareAppMessage',-->
-            <!--'onMenuShareTimeline',-->
-            <!--'hideMenuItems',-->
-            <!--'hideOptionMenu'-->
-        <!--] // 必填，需要使用的JS接口列表，-->
-    <!--});-->
-
-    <!--wx.ready(function () {-->
-        <!--//分享给朋友-->
-        <!--wx.onMenuShareAppMessage({-->
-            <!--title: '分享给你一头奶牛，追上它还有奖哦~',-->
-            <!--desc: '',-->
-            <!--link: 'http://testh5.dan-ye.com', // 分享链接-->
-            <!--imgUrl: '[(@{/static/res/raw-assets/sprites/cows/cowsRun/cows01.png})]', // 分享图标-->
-            <!--type: 'link',-->
-            <!--dataUrl: '',-->
-            <!--success: function () {-->
-            <!--},-->
-            <!--cancel: function () {-->
-            <!--}-->
-        <!--});-->
-        <!--wx.onMenuShareTimeline({-->
-            <!--title: '跟我一起摇起来，beats耳机带回家~', // 分享标题-->
-            <!--link: 'http://testh5.dan-ye.com', // 分享链接-->
-            <!--imgUrl: '[(@{/static/res/raw-assets/sprites/cows/cowsRun/cows01.png})]', // 分享图标-->
-            <!--success: function () {-->
-            <!--},-->
-            <!--cancel: function () {-->
-            <!--}-->
-        <!--});-->
-
-        <!--wx.hideMenuItems({-->
-            <!--menuList: [-->
-                <!--'menuItem:share:qq', // 分享到QQ-->
-                <!--'menuItem:share:weiboApp', // 分享到Weibo-->
-                <!--'menuItem:share:QZone', // 分享到QQ空间-->
-                <!--'menuItem:share:facebook', // 分享到FB-->
-                <!--'menuItem:share:email', // 邮件-->
-                <!--'menuItem:readMode', // 阅读模式-->
-                <!--'menuItem:copyUrl' //复制链接-->
-            <!--] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，-->
-        <!--});-->
-    <!--});-->
-    <!--wx.error(function (res) {-->
-        <!--window.location.href = window.location.href;-->
-    <!--});-->
-<!--</script>-->
+<script th:inline="javascript">
+    //调用微信api
+    // wx.config({
+    //     debug: false,
+    //     appId: '[(${config_appId})]',
+    //     timestamp: '[(${config_timestamp})]',
+    //     nonceStr: '[(${config_nonceStr})]',
+    //     signature: '[(${config_signature})]',
+    //     jsApiList: [
+    //         'onMenuShareAppMessage',
+    //         'onMenuShareTimeline',
+    //         'hideMenuItems',
+    //         'hideOptionMenu'
+    //     ] // 必填，需要使用的JS接口列表，
+    // });
+    //
+    // wx.ready(function () {
+    //     //分享给朋友
+    //     wx.onMenuShareAppMessage({
+    //         title: '分享给你一头奶牛，追上它还有奖哦~',
+    //         desc: '',
+    //         link: 'http://testh5.dan-ye.com', // 分享链接
+    //         imgUrl: '[(@{/static/res/raw-assets/sprites/cows/cowsRun/cows01.png})]', // 分享图标
+    //         type: 'link',
+    //         dataUrl: '',
+    //         success: function () {
+    //         },
+    //         cancel: function () {
+    //         }
+    //     });
+    //     wx.onMenuShareTimeline({
+    //         title: '跟我一起摇起来，beats耳机带回家~', // 分享标题
+    //         link: 'http://testh5.dan-ye.com', // 分享链接
+    //         imgUrl: '[(@{/static/res/raw-assets/sprites/cows/cowsRun/cows01.png})]', // 分享图标
+    //         success: function () {
+    //         },
+    //         cancel: function () {
+    //         }
+    //     });
+    //
+    //     wx.hideMenuItems({
+    //         menuList: [
+    //             'menuItem:share:qq', // 分享到QQ
+    //             'menuItem:share:weiboApp', // 分享到Weibo
+    //             'menuItem:share:QZone', // 分享到QQ空间
+    //             'menuItem:share:facebook', // 分享到FB
+    //             'menuItem:share:email', // 邮件
+    //             'menuItem:readMode', // 阅读模式
+    //             'menuItem:copyUrl' //复制链接
+    //         ] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，
+    //     });
+    // });
+    // wx.error(function (res) {
+    //     // window.location.href = window.location.href;
+    // });
+</script>
 </body>
 </html>

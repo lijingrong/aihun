@@ -5,6 +5,7 @@ import com.danye.aihun.model.GameTeam;
 import com.danye.aihun.model.ResponseCode;
 import com.danye.aihun.service.ContactService;
 import com.danye.aihun.service.GameTeamService;
+import com.danye.aihun.service.WXTokenService;
 import com.danye.aihun.utils.OSSUtil;
 import com.danye.aihun.utils.QRCodeUtil;
 import com.danye.aihun.utils.UserIdHolder;
@@ -29,10 +30,12 @@ public class IndexController {
     private ContactService contactService;
     @Autowired
     private GameTeamService gameTeamService;
+    @Autowired
+    private WXTokenService wxTokenService;
 
     @RequestMapping("/")
     public String index(HttpServletRequest request, Model model) {
-//        wxTokenService.getWechatJsApiConfig(request, model);
+        wxTokenService.getWechatJsApiConfig(request, model);
         return "index";
     }
 
