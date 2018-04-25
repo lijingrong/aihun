@@ -1,5 +1,6 @@
 package com.danye.aihun.config;
 
+import com.danye.aihun.utils.UserIdInterceptor;
 import com.danye.aihun.utils.WXAuthLoginInterceptor;
 import com.danye.aihun.utils.WXBrowserInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,12 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     private WXAuthLoginInterceptor wxAuthLoginInterceptor;
     @Autowired
     private WXBrowserInterceptor wxBrowserInterceptor;
+    @Autowired
+    private UserIdInterceptor userIdInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(userIdInterceptor).addPathPatterns("/", "/aihun/**");
         registry.addInterceptor(wxAuthLoginInterceptor).addPathPatterns("/");
         registry.addInterceptor(wxBrowserInterceptor).addPathPatterns("/**").excludePathPatterns("/noWechat");
     }

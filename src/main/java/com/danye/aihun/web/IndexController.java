@@ -4,14 +4,12 @@ import com.danye.aihun.model.Contact;
 import com.danye.aihun.model.GameTeam;
 import com.danye.aihun.model.ResponseCode;
 import com.danye.aihun.service.ContactService;
-import com.danye.aihun.service.GameTeamRepository;
 import com.danye.aihun.service.GameTeamService;
-import com.danye.aihun.service.WXTokenService;
 import com.danye.aihun.utils.OSSUtil;
 import com.danye.aihun.utils.QRCodeUtil;
+import com.danye.aihun.utils.UserIdHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,8 +29,6 @@ public class IndexController {
     private ContactService contactService;
     @Autowired
     private GameTeamService gameTeamService;
-    @Autowired
-    private WXTokenService wxTokenService;
 
     @RequestMapping("/")
     public String index(HttpServletRequest request, Model model) {
@@ -40,7 +36,7 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping("/addContact")
+    @RequestMapping("/aihun/addContact")
     @ResponseBody
     public ResponseCode addContact(@RequestParam("zhName") String zhName,
                                    @RequestParam("telephone") String telephone,
@@ -54,7 +50,7 @@ public class IndexController {
         return ResponseCode.SUCCESS;
     }
 
-    @RequestMapping("/getQRCode")
+    @RequestMapping("/aihun/getQRCode")
     @ResponseBody
     public Map<String, String> qrCode(ServletRequest request) {
         final String uid = UUID.randomUUID().toString();
@@ -70,7 +66,7 @@ public class IndexController {
         return result;
     }
 
-    @RequestMapping("/getGameTeam")
+    @RequestMapping("/aihun/getGameTeam")
     @ResponseBody
     public Map<String, Object> getGameTeam(@RequestParam(value = "uid", required = false) String uid) {
         Map<String, Object> result = new HashMap<>();
@@ -81,11 +77,9 @@ public class IndexController {
         GameTeam gameTeam = gameTeamService.getLatestGameTeamByUid(uid);
         if (gameTeam == null) {
             result.put("code", 0);
-            //todo:设置当前用户ID
-            result.put("uid", UUID.randomUUID().toString());
+            result.put("uid", UserIdHolder.getUserId());
         } else {
-            //todo
-            gameTeam.setFollowId(UUID.randomUUID().toString());
+            gameTeam.setFollowId(UserIdHolder.getUserId());
             gameTeamService.save(gameTeam);
             result.put("code", 1);
             result.put("data", gameTeam);
