@@ -16,7 +16,8 @@ CREATE TABLE t_game_team (
   uid       VARCHAR(50) NOT NULL,
   follow_id VARCHAR(50),
   time      DATETIME DEFAULT now()
-)
+);
+
 CREATE TABLE t_user_info (
   user_id VARCHAR(100) NOT NULL COMMENT '用户Id',
   open_id VARCHAR(100) NOT NULL COMMENT '微信openId',
