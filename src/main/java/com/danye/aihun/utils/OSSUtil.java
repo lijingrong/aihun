@@ -17,7 +17,11 @@ public class OSSUtil {
         String ossImgName = DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + getFourRandom()
                 + "." + postfix;
         // endpoint以杭州为例，其它region请按实际情况填写
-        String endpoint = "oss-cn-shanghai-internal.aliyuncs.com";
+        //内网
+        //String endpoint = "oss-cn-shanghai-internal.aliyuncs.com";
+        //外网
+        String endpoint = "oss-cn-shanghai.aliyuncs.com";
+
         // accessKey请登录https://ak-console.aliyun.com/#/查看
         String accessKeyId = "LTAIo5b7drpOb4A9";
         String accessKeySecret = "kEE8Rc9d60xguRHK1BeiIpTVOEJn4b";
