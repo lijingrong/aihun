@@ -6,17 +6,20 @@ import com.danye.aihun.model.ResponseCode;
 import com.danye.aihun.service.ContactService;
 import com.danye.aihun.service.GameTeamRepository;
 import com.danye.aihun.service.GameTeamService;
+import com.danye.aihun.service.WXTokenService;
 import com.danye.aihun.utils.OSSUtil;
 import com.danye.aihun.utils.QRCodeUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -28,9 +31,12 @@ public class IndexController {
     private ContactService contactService;
     @Autowired
     private GameTeamService gameTeamService;
+    @Autowired
+    private WXTokenService wxTokenService;
 
     @RequestMapping("/")
-    public String index() {
+    public String index(HttpServletRequest request, Model model) {
+//        wxTokenService.getWechatJsApiConfig(request, model);
         return "index";
     }
 
@@ -76,7 +82,7 @@ public class IndexController {
         if (gameTeam == null) {
             result.put("code", 0);
             //todo:设置当前用户ID
-            result.put("uid",UUID.randomUUID().toString());
+            result.put("uid", UUID.randomUUID().toString());
         } else {
             //todo
             gameTeam.setFollowId(UUID.randomUUID().toString());
@@ -85,6 +91,11 @@ public class IndexController {
             result.put("data", gameTeam);
         }
         return result;
+    }
+
+    @RequestMapping("/noWechat")
+    public String noWechat() {
+        return "noWechat";
     }
 
 }
