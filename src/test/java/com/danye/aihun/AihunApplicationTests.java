@@ -35,7 +35,7 @@ public class AihunApplicationTests {
     @Test
     public void addContact() {
         Contact contact = new Contact();
-        contact.setOpenId("123456");
+        contact.setUid("123456");
         contact.setTelephone("15951076347");
         contact.setZhName("梁静茹");
         contact.setAddress("江苏省南京市江宁区秣周东路悠谷3号楼p349");
