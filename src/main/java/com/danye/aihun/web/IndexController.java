@@ -13,12 +13,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -66,6 +68,7 @@ public class IndexController {
         gameTeamService.save(gameTeam);
         Map<String, String> result = new HashMap<>();
         result.put("imgUrl", "http://aihun-img.oss-cn-shanghai.aliyuncs.com/" + imgName);
+        result.put("gameTeamId", gameTeam.getId());
         return result;
     }
 
@@ -89,6 +92,34 @@ public class IndexController {
         }
         return result;
     }
+
+    @RequestMapping("/aihun/isFollowerJoin")
+    @ResponseBody
+    public ResponseCode isFollowerJoin(@RequestParam("gameTeamId") String gameTeamId) {
+        if (StringUtils.isEmpty(gameTeamId))
+            return ResponseCode.FAILURE;
+        GameTeam gameTeam = gameTeamService.getGameTeam(gameTeamId);
+        if (gameTeam == null || StringUtils.isEmpty(gameTeam.getFollowId()))
+            return ResponseCode.FAILURE;
+        return ResponseCode.SUCCESS;
+    }
+
+    @PostMapping("/aihun/postSharkTime")
+    @ResponseBody
+    public ResponseCode postSharkTime(@RequestParam("gameTeamId") String gameTeamId, @RequestParam("uid") String uid) {
+        if (StringUtils.isEmpty(gameTeamId))
+            return ResponseCode.FAILURE;
+        GameTeam gameTeam = gameTeamService.getGameTeam(gameTeamId);
+        if (gameTeam == null)
+            return ResponseCode.FAILURE;
+        if (StringUtils.equals(uid, gameTeam.getUid()))
+            gameTeam.setUSharkTime(new Date());
+        if (StringUtils.equals(uid, gameTeam.getFollowId()))
+            gameTeam.setFSharkTime(new Date());
+        gameTeamService.save(gameTeam);
+        return ResponseCode.SUCCESS;
+    }
+
 
     @RequestMapping("/noWechat")
     public String noWechat() {

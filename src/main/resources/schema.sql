@@ -15,6 +15,8 @@ CREATE TABLE t_game_team (
   id        VARCHAR(50) NOT NULL PRIMARY KEY,
   uid       VARCHAR(50) NOT NULL,
   follow_id VARCHAR(50),
+  u_shark_time DATETIME COMMENT '主用户摇动手机时间',
+  f_shark_time DATETIME COMMENT '从用户摇动手机时间',
   time      DATETIME DEFAULT now()
 );
 

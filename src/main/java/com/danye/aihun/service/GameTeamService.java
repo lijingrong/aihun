@@ -23,4 +23,8 @@ public class GameTeamService {
         }
         return page.getContent().get(0);
     }
+
+    public GameTeam getGameTeam(String gameTeamId) {
+        return gameTeamRepository.getOne(gameTeamId);
+    }
 }

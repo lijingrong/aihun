@@ -20,6 +20,10 @@ public class GameTeam {
 
     private String followId;
 
+    private Date uSharkTime;
+
+    private Date fSharkTime;
+
     @Column(insertable = false, updatable = false)
     private Date time;
 
