@@ -120,6 +120,25 @@ public class IndexController {
         return ResponseCode.SUCCESS;
     }
 
+    /**
+     * 双人玩游戏时，判断一伴是否摇动了手机
+     * @param gameTeamId 组队的Id
+     * @return code=1 摇了，code=2 未摇
+     */
+    @RequestMapping("/aihun/isPartnerSharked")
+    @ResponseBody
+    public ResponseCode isPartnerSharked(@RequestParam("gameTeamId") String gameTeamId) {
+        if (StringUtils.isEmpty(gameTeamId))
+            return ResponseCode.FAILURE;
+        GameTeam gameTeam = gameTeamService.getGameTeam(gameTeamId);
+        if (gameTeam == null)
+            return ResponseCode.FAILURE;
+        if (StringUtils.equals(UserIdHolder.getUserId(), gameTeam.getUid()) && gameTeam.getFSharkTime() != null)
+            return ResponseCode.SUCCESS;
+        if (StringUtils.equals(UserIdHolder.getUserId(), gameTeam.getFollowId()) && gameTeam.getUSharkTime() != null)
+            return ResponseCode.SUCCESS;
+        return ResponseCode.FAILURE;
+    }
 
     @RequestMapping("/noWechat")
     public String noWechat() {
