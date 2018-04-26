@@ -56,7 +56,7 @@ public class IndexController {
     @RequestMapping("/aihun/getQRCode")
     @ResponseBody
     public Map<String, String> qrCode(ServletRequest request) {
-        final String uid = UUID.randomUUID().toString();
+        final String uid = UserIdHolder.getUserId();
         String url = request.getScheme() + "://" + request.getServerName() + ":"
                 + request.getServerPort() + "?uid=" + uid;
         String imgName = OSSUtil.upload(QRCodeUtil.generateQRCodeStream(url));
