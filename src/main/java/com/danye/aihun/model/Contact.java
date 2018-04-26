@@ -13,7 +13,7 @@ import javax.persistence.Table;
 public class Contact {
 
     @Id
-    private String openId;
+    private String uid;
     private String zhName;
     private String telephone;
     private String address;

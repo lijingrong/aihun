@@ -47,7 +47,7 @@ public class IndexController {
                                    @RequestParam("telephone") String telephone,
                                    @RequestParam("address") String address) {
         Contact contact = new Contact();
-        contact.setOpenId("");
+        contact.setUid(UserIdHolder.getUserId());
         contact.setZhName(zhName);
         contact.setTelephone(telephone);
         contact.setAddress(address);
@@ -122,6 +122,7 @@ public class IndexController {
 
     /**
      * 双人玩游戏时，判断一伴是否摇动了手机
+     *
      * @param gameTeamId 组队的Id
      * @return code=1 摇了，code=2 未摇
      */
