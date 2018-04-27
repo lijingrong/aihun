@@ -4,6 +4,7 @@ import com.danye.aihun.model.Contact;
 import com.danye.aihun.model.GameTeam;
 import com.danye.aihun.model.ResponseCode;
 import com.danye.aihun.service.ContactService;
+import com.danye.aihun.service.DrawService;
 import com.danye.aihun.service.GameTeamService;
 import com.danye.aihun.service.WXTokenService;
 import com.danye.aihun.utils.OSSUtil;
@@ -34,6 +35,8 @@ public class IndexController {
     private GameTeamService gameTeamService;
     @Autowired
     private WXTokenService wxTokenService;
+    @Autowired
+    private DrawService drawService;
 
     @RequestMapping("/")
     public String index(HttpServletRequest request, Model model) {
@@ -139,6 +142,15 @@ public class IndexController {
         if (StringUtils.equals(UserIdHolder.getUserId(), gameTeam.getFollowId()) && gameTeam.getUSharkTime() != null)
             return ResponseCode.SUCCESS;
         return ResponseCode.FAILURE;
+    }
+
+    @RequestMapping("/aihun/draw")
+    @ResponseBody
+    public Map<String, Object> draw() {
+        Map<String, Object> result = new HashMap<>();
+        result.put("code", 1);
+        result.put("drawResult", drawService.draw());
+        return result;
     }
 
     @RequestMapping("/noWechat")

@@ -3,6 +3,7 @@ package com.danye.aihun;
 import com.danye.aihun.model.Contact;
 import com.danye.aihun.model.GameTeam;
 import com.danye.aihun.service.ContactRepository;
+import com.danye.aihun.service.DrawService;
 import com.danye.aihun.service.GameTeamRepository;
 import com.danye.aihun.service.GameTeamService;
 import com.danye.aihun.utils.OSSUtil;
@@ -26,6 +27,8 @@ public class AihunApplicationTests {
     private ContactRepository contactRepository;
     @Autowired
     private GameTeamService gameTeamService;
+    @Autowired
+    private DrawService drawService;
 
     @Test
     public void contextLoads() {
@@ -58,5 +61,15 @@ public class AihunApplicationTests {
         gameTeam.setFollowId(UUID.randomUUID().toString());
         gameTeamService.save(gameTeam);
         gameTeamService.getLatestGameTeamByUid(uid);
+    }
+
+    @Test
+    public void random(){
+        System.out.println(drawService.draw());
+        System.out.println(drawService.draw());
+        System.out.println(drawService.draw());
+        System.out.println(drawService.draw());
+        System.out.println(drawService.draw());
+        System.out.println(drawService.draw());
     }
 }
