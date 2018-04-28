@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -25,7 +26,7 @@ import java.util.Random;
  */
 @Service
 @PropertySource("classpath:environment.properties")
-public class WXCommonService {
+public class WXCommonService implements InitializingBean {
 
     private static Logger log = LogManager.getLogger(WXCommonService.class);
 
@@ -43,7 +44,6 @@ public class WXCommonService {
     public JsonNode httpsRequest(String requestUrl, String requestMethod, String outputStr) {
         JsonNode jsonNode = null;
         try {
-            System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
             // 创建 SSLContext 对象，并使用我们指定的信任管理器初始化
             TrustManager[] tm = {new MyX509TrustManager()};
             SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
@@ -157,5 +157,10 @@ public class WXCommonService {
         requestUrl = requestUrl.replace("SCOPE", scope);
         requestUrl = requestUrl.replace("STATE", state);
         return requestUrl;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
     }
 }
