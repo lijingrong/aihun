@@ -43,6 +43,7 @@ public class WXCommonService {
     public JsonNode httpsRequest(String requestUrl, String requestMethod, String outputStr) {
         JsonNode jsonNode = null;
         try {
+            System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
             // 创建 SSLContext 对象，并使用我们指定的信任管理器初始化
             TrustManager[] tm = {new MyX509TrustManager()};
             SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
