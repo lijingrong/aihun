@@ -65,11 +65,11 @@ public class AihunApplicationTests {
 
     @Test
     public void random(){
-        System.out.println(drawService.draw());
-        System.out.println(drawService.draw());
-        System.out.println(drawService.draw());
-        System.out.println(drawService.draw());
-        System.out.println(drawService.draw());
-        System.out.println(drawService.draw());
+        System.out.println(drawService.draw("123456"));
+        System.out.println(drawService.draw("123456"));
+        System.out.println(drawService.draw("123456"));
+        System.out.println(drawService.draw("123456"));
+        System.out.println(drawService.draw("123456"));
+        System.out.println(drawService.draw("123456"));
     }
 }

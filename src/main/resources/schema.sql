@@ -3,6 +3,8 @@ DROP TABLE IF EXISTS t_game_team;
 DROP TABLE IF EXISTS t_user_info;
 DROP TABLE IF EXISTS t_wechat_jsapi_ticket;
 DROP TABLE IF EXISTS t_wechat_oauth_code;
+DROP TABLE IF EXISTS t_prize;
+DROP TABLE IF EXISTS t_draw;
 
 CREATE TABLE t_contact (
   uid   VARCHAR(50) NOT NULL PRIMARY KEY,
@@ -54,4 +56,23 @@ CREATE TABLE t_wechat_oauth_code (
   UNIQUE KEY t_wechat_oauth_code_code (wx_code) USING BTREE
 );
 
+CREATE TABLE t_prize (
+  prize_id VARCHAR(100) NOT NULL COMMENT '奖品表Id',
+  prize_name VARCHAR(100) NOT NULL COMMENT '奖品名称',
+  prize_type TINYINT NOT NULL COMMENT '奖项类型，0-一等奖，1-二等奖，2-三等奖，3-无奖',
+  sum_count TINYINT NOT NULL COMMENT '奖品总数，-1 数量不限',
+  remain_count TINYINT NOT NULL COMMENT '剩余总数',
+  rand INT NOT NULL COMMENT '中奖概率',
+  PRIMARY KEY (prize_id)
+);
 
+CREATE TABLE t_draw (
+  draw_id VARCHAR(100) NOT NULL COMMENT '抽奖表Id',
+  user_id VARCHAR(100) NOT NULL COMMENT '用户Id',
+  prize_id VARCHAR(100) NOT NULL COMMENT '奖品Id',
+  is_draw TINYINT NOT NULL DEFAULT 0 COMMENT '是否中奖，1-是，0-否',
+  draw_time DATETIME NOT NULL COMMENT '抽奖时间',
+  PRIMARY KEY (draw_id),
+  KEY t_draw_record_user_id (user_id) USING BTREE,
+  KEY t_draw_record_prize_id (prize_id) USING BTREE
+);

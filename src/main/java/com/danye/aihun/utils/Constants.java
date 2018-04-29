@@ -11,4 +11,9 @@ public class Constants {
     public static final String WECHAT_PERM_FLAG = "wxPermFlag"; // 微信权限标识字段
     public static final String WECHAT_ANON_LOGIN = "wxAnonLogin"; // 微信匿名登录
     public static final String WECHAT_AUTH_LOGIN = "wxAuthLogin"; // 微信授权登录
+
+    // 抽奖标识，3-无奖
+    public static final Short NO_PRIZE = 3;
+    // 是否中奖
+    public static final Short WINNING_PRIZE = 1;
 }

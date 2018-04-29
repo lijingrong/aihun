@@ -149,7 +149,7 @@ public class IndexController {
     public Map<String, Object> draw() {
         Map<String, Object> result = new HashMap<>();
         result.put("code", 1);
-        result.put("drawResult", drawService.draw());
+        result.put("drawResult", drawService.draw(UserIdHolder.getUserId()));
         return result;
     }
 
