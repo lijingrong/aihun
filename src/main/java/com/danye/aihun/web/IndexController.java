@@ -12,6 +12,8 @@ import com.danye.aihun.utils.QRCodeUtil;
 import com.danye.aihun.utils.UserIdHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,8 +29,11 @@ import java.util.Map;
 import java.util.UUID;
 
 @Controller
+@PropertySource("classpath:environment.properties")
 public class IndexController {
 
+    @Autowired
+    private Environment environment;
     @Autowired
     private ContactService contactService;
     @Autowired
@@ -41,6 +46,7 @@ public class IndexController {
     @RequestMapping("/")
     public String index(HttpServletRequest request, Model model) {
         wxTokenService.getWechatJsApiConfig(request, model);
+        model.addAttribute("share_url", environment.getProperty("domain.web"));
         return "index";
     }
 

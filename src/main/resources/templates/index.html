@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>爱混实验室</title>
+    <title>爱混食验室</title>
 
     <!--http://www.html5rocks.com/en/mobile/mobifying/-->
     <meta name="viewport"
@@ -72,10 +72,10 @@
     wx.ready(function () {
         //分享给朋友
         wx.onMenuShareAppMessage({
-            title: '分享给你一头奶牛，追上它还有奖哦~',
-            desc: '',
-            link: 'http://testh5.dan-ye.com', // 分享链接
-            imgUrl: '[(@{https://aihun-img.oss-cn-shanghai.aliyuncs.com/static/share/puddingRun.png})]', // 分享图标
+            title: '「爱混食验室」有一头奶牛出逃，快帮我追上它~',
+            desc: '能不能中奖，就看你手速了！',
+            link: '[(${share_url})]', // 分享链接
+            imgUrl: '[(@{https://aihun-img.oss-cn-shanghai.aliyuncs.com/static/share/shareRemix.jpg})]', // 分享图标
             type: 'link',
             dataUrl: '',
             success: function () {
@@ -85,8 +85,8 @@
         });
         wx.onMenuShareTimeline({
             title: '跟我一起摇起来，beats耳机带回家~', // 分享标题
-            link: 'http://testh5.dan-ye.com', // 分享链接
-            imgUrl: '[(@{https://aihun-img.oss-cn-shanghai.aliyuncs.com/static/share/puddingRun.png})]', // 分享图标
+            link: '[(${share_url})]', // 分享链接
+            imgUrl: '[(@{https://aihun-img.oss-cn-shanghai.aliyuncs.com/static/share/shareRemix.jpg})]', // 分享图标
             success: function () {
             },
             cancel: function () {
