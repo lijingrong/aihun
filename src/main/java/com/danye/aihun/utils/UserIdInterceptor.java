@@ -12,8 +12,9 @@ public class UserIdInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (StringUtils.isEmpty(request.getParameter("userId")))
-            return false;
+        /*if (StringUtils.isEmpty(request.getParameter("userId")))
+            return false;*/
+        System.out.println("####### userId=" + request.getParameter("userId"));
         UserIdHolder.setUserId(request.getParameter("userId"));
         return true;
     }

@@ -50,6 +50,11 @@ public class IndexController {
         return "index";
     }
 
+    @RequestMapping("/test")
+    public String testIndex(){
+        return "test";
+    }
+
     @RequestMapping("/aihun/addContact")
     @ResponseBody
     public ResponseCode addContact(@RequestParam("zhName") String zhName,
