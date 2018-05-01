@@ -1,5 +1,6 @@
 package com.danye.aihun.utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -11,6 +12,8 @@ public class UserIdInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        if (StringUtils.isEmpty(request.getParameter("userId")))
+            return false;
         UserIdHolder.setUserId(request.getParameter("userId"));
         return true;
     }
