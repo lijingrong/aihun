@@ -19,6 +19,8 @@ CREATE TABLE t_game_team (
   follow_id VARCHAR(50),
   u_shark_time DATETIME COMMENT '主用户摇动手机时间',
   f_shark_time DATETIME COMMENT '从用户摇动手机时间',
+  u_game_status smallint default -1 comment '0 失败,1 成功',
+  f_game_status smallint default -1 comment '0 失败,1 成功',
   time      DATETIME DEFAULT now()
 );
 

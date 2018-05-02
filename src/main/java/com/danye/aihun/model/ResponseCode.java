@@ -7,6 +7,8 @@ public final class ResponseCode {
 
     public final static ResponseCode SUCCESS = new ResponseCode(1, "成功");
     public final static ResponseCode FAILURE = new ResponseCode(2, "失败");
+    public final static ResponseCode FAILURE_0 = new ResponseCode(0, "失败");
+    public final static ResponseCode CODE_1 = new ResponseCode(-1, "游戏中");
 
     public ResponseCode(Integer code, String desc) {
         this.code = code;

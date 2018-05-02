@@ -24,6 +24,11 @@ public class GameTeam {
 
     private Date fSharkTime;
 
+    @Column(insertable = false)
+    private Integer uGameStatus;
+    @Column(insertable = false)
+    private Integer fGameStatus;
+
     @Column(insertable = false, updatable = false)
     private Date time;
 

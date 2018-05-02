@@ -16,10 +16,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +48,7 @@ public class IndexController {
     }
 
     @RequestMapping("/test")
-    public String testIndex(){
+    public String testIndex() {
         return "test";
     }
 
@@ -162,6 +159,51 @@ public class IndexController {
         result.put("code", 1);
         result.put("drawResult", drawService.draw(UserIdHolder.getUserId()));
         return result;
+    }
+
+    @PostMapping("/aihun/postGameStatus")
+    @ResponseBody
+    public ResponseCode postGameStatus(@RequestParam("gameTeamId") String gameTeamId,
+                                       @RequestParam("gameStatus") Integer gameStatus) {
+        if (StringUtils.isEmpty(gameTeamId) || (gameStatus != 1 && gameStatus != 0))
+            return ResponseCode.FAILURE;
+        GameTeam gameTeam = gameTeamService.getGameTeam(gameTeamId);
+        if (gameTeam == null)
+            return ResponseCode.FAILURE;
+        if (StringUtils.equals(UserIdHolder.getUserId(), gameTeam.getUid())) {
+            gameTeam.setUGameStatus(gameStatus);
+        } else if (StringUtils.equals(UserIdHolder.getUserId(), gameTeam.getFollowId())) {
+            gameTeam.setFGameStatus(gameStatus);
+        }
+        gameTeamService.save(gameTeam);
+        return ResponseCode.SUCCESS;
+    }
+
+    @GetMapping("/aihun/getGameStatus")
+    @ResponseBody
+    public ResponseCode getGameStatus(@RequestParam("gameTeamId") String gameTeamId) {
+        if (StringUtils.isEmpty(gameTeamId))
+            return ResponseCode.FAILURE;
+        GameTeam gameTeam = gameTeamService.getGameTeam(gameTeamId);
+        if (gameTeam == null)
+            return ResponseCode.FAILURE;
+        if (StringUtils.equals(UserIdHolder.getUserId(), gameTeam.getUid())) {
+            if (-1 == gameTeam.getFGameStatus())
+                return ResponseCode.CODE_1;
+            if (0 == gameTeam.getFGameStatus())
+                return ResponseCode.FAILURE_0;
+            if (1 == gameTeam.getFGameStatus())
+                return ResponseCode.SUCCESS;
+        }
+        if (StringUtils.equals(UserIdHolder.getUserId(), gameTeam.getFollowId())) {
+            if (-1 == gameTeam.getUGameStatus())
+                return ResponseCode.CODE_1;
+            if (0 == gameTeam.getUGameStatus())
+                return ResponseCode.FAILURE_0;
+            if (1 == gameTeam.getUGameStatus())
+                return ResponseCode.SUCCESS;
+        }
+        return ResponseCode.FAILURE;
     }
 
     @RequestMapping("/noWechat")
