@@ -23,7 +23,8 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(userIdInterceptor).addPathPatterns("/", "/aihun/**");
         registry.addInterceptor(wxAuthLoginInterceptor).addPathPatterns("/");
-        registry.addInterceptor(wxBrowserInterceptor).addPathPatterns("/**").excludePathPatterns("/noWechat", "/wxCoreServlet","/test");
+        registry.addInterceptor(wxBrowserInterceptor).addPathPatterns("/**").excludePathPatterns("/noWechat",
+                "/wxCoreServlet","/test","/audio","/res/**");
     }
 
     @Override

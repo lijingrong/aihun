@@ -52,6 +52,11 @@ public class IndexController {
         return "test";
     }
 
+    @RequestMapping("/audio")
+    public String audio() {
+        return "audio";
+    }
+
     @RequestMapping("/aihun/addContact")
     @ResponseBody
     public ResponseCode addContact(@RequestParam("zhName") String zhName,

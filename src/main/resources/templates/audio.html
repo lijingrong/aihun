@@ -37,23 +37,11 @@
     <!--<link rel="apple-touch-icon" href=".png" />-->
     <!--<link rel="apple-touch-icon-precomposed" href=".png" />-->
 
-    <link rel="stylesheet" type="text/css" th:href="@{/style-mobile.css}"/>
-
 </head>
 <body>
-<canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="0"></canvas>
-<div id="splash">
-    <div class="progress-bar stripes">
-        <span style="width: 0"></span>
-    </div>
-</div>
 <audio id="musicAudio" autoplay="autoplay" loop="loop">
     <source src="/res/raw-assets/resources/music.mp3" type="audio/mpeg">
 </audio>
-<script th:src="@{/src/settings.js}" charset="utf-8"></script>
-
-<script th:src="@{/main.js}" charset="utf-8"></script>
-
 <script th:src="@{http://res.wx.qq.com/open/js/jweixin-1.2.0.js}"></script>
 
 <script th:inline="javascript">
@@ -107,25 +95,10 @@
                 'menuItem:copyUrl' //复制链接
             ] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，
         });
-
-        if(cc.sys.os===cc.sys.OS_IOS){
-            /*document.getElementById('bgmusic').play();
-            console.log(cc.sys.OS_IOS);
-            document.addEventListener('WeixinJSBridgeReady', function () {
-                console.log("WeixinJSBridgeReady");
-                var audio = document.createElement('audio');
-                audio.src = cc.url.raw('resources/music.mp3');
-                audio.play();
-            });*/
-        }
     });
     wx.error(function (res) {
         // window.location.href = window.location.href;
     });
-
-    /**
-     * 自动播放背景音乐
-     */
     document.addEventListener('DOMContentLoaded', function() {
         function audioAutoPlay() {
             var audio = document.getElementById('musicAudio');
@@ -136,7 +109,6 @@
         }
         audioAutoPlay();
     });
-
 </script>
 </body>
 </html>
