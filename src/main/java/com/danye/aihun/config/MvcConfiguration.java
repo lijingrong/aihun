@@ -21,10 +21,10 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(userIdInterceptor).addPathPatterns("/", "/aihun/**");
-        registry.addInterceptor(wxAuthLoginInterceptor).addPathPatterns("/");
         registry.addInterceptor(wxBrowserInterceptor).addPathPatterns("/**").excludePathPatterns("/noWechat",
-                "/wxCoreServlet","/test","/audio","/res/**");
+                "/wxCoreServlet","/test","/audio","/res/**","/**/*.png","/**/*.js","/**/*.css");
+        registry.addInterceptor(wxAuthLoginInterceptor).addPathPatterns("/");
+        registry.addInterceptor(userIdInterceptor).addPathPatterns("/", "/aihun/**");
     }
 
     @Override

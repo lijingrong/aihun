@@ -20,7 +20,7 @@ import java.util.Map;
 public class QRCodeUtil {
 
     public static InputStream generateQRCodeStream(final String url) {
-        int size = 250;
+        int size = 310;
         String fileType = "jpg";
         InputStream is = null;
         try {
