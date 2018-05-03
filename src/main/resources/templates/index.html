@@ -47,7 +47,7 @@
         <span style="width: 0"></span>
     </div>
 </div>
-<audio id="musicAudio" autoplay="autoplay" loop="loop">
+<audio id="musicAudio" loop="loop">
     <source src="/res/raw-assets/resources/music.mp3" type="audio/mpeg">
 </audio>
 <script th:src="@{/src/settings.js}" charset="utf-8"></script>
@@ -127,10 +127,12 @@
     var u = navigator.userAgent, app = navigator.appVersion;
     var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //如果输出结果是true就判定是android终端或者uc浏览器
     var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //根据输出结果true或者false来判断ios终端
+
     /**
      * 自动播放背景音乐
      */
     if(isiOS){
+
         document.addEventListener('DOMContentLoaded', function() {
                 console.log("ios music play!");
                 function audioAutoPlay() {
