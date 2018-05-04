@@ -1,5 +1,6 @@
 package com.danye.aihun.utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -15,7 +16,8 @@ public class WXBrowserInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        if (request.getHeader("User-Agent").contains("MicroMessenger")) {
+        if (StringUtils.isNotEmpty(request.getHeader("User-Agent"))
+                && request.getHeader("User-Agent").contains("MicroMessenger")) {
             return true;
         } else {
             request.getRequestDispatcher("/noWechat").forward(request, response);
