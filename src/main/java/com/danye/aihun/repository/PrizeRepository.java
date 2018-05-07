@@ -13,8 +13,6 @@ import java.util.List;
 @Repository
 public interface PrizeRepository extends JpaRepository<Prize, String> {
 
-    @Query(value = " SELECT * FROM t_prize WHERE remain_count <> 0 ", nativeQuery = true)
+    @Query(value = " SELECT * FROM t_prize WHERE remain_count > 0 ", nativeQuery = true)
     List<Prize> getAvailablePrize();
-
-    Prize getPrizeByPrizeType(Short prizeType);
 }

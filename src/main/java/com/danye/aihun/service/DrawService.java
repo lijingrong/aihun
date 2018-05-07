@@ -34,20 +34,10 @@ public class DrawService {
     /**
      * 获取中奖奖品，如果用户已中过奖，再次抽奖则不中奖
      *
-     * @param userId 用户Id
      * @return Prize
      */
-    public Prize getPrize(String userId) {
-        List<Prize> prizeList = new ArrayList<>();
-
-        Draw drawRecord = drawRecordRepository.getTopByUserIdAndIsDraw(userId, Constants.WINNING_PRIZE);
-        if (null != drawRecord) {
-            prizeList.add(prizeRepository.getPrizeByPrizeType(Constants.NO_PRIZE));
-        } else {
-            prizeList.addAll(prizeRepository.getAvailablePrize());
-        }
-
-        return getRandomPrize(prizeList);
+    public Prize getPrize() {
+        return getRandomPrize(prizeRepository.getAvailablePrize());
     }
 
     /**
@@ -87,9 +77,17 @@ public class DrawService {
      * @return Short
      */
     public Short draw(String userId) {
-        Prize prize = getPrize(userId);
+        Draw drawRecord = drawRecordRepository.getTopByUserIdAndIsDraw(userId, Constants.WINNING_PRIZE);
+        if (null != drawRecord) {
+            return Constants.NO_PRIZE;
+        }
+
+        Prize prize = prizeRepository.getOne(getPrize().getPrizeId());
         Short isDraw = 0;
         if (prize.getPrizeType().shortValue() != Constants.NO_PRIZE) {
+            if (prize.getRemainCount() <= 0) {
+                return Constants.NO_PRIZE;
+            }
             int remainCount = prize.getRemainCount() - 1;
             prize.setRemainCount((short) remainCount);
             isDraw = 1;
@@ -100,6 +98,5 @@ public class DrawService {
         saveDrawPrize(draw, prize);
 
         return prize.getPrizeType();
-
     }
 }
