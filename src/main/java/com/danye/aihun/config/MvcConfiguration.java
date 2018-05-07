@@ -22,7 +22,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(wxBrowserInterceptor).addPathPatterns("/**").excludePathPatterns("/noWechat",
-                "/wxCoreServlet","/test","/audio","/res/**","/**/*.png","/**/*.js","/**/*.css");
+                "/wxCoreServlet","/test","/audio","/res/**","/**/*.png","/**/*.js","/**/*.css","/**/*.txt");
         registry.addInterceptor(wxAuthLoginInterceptor).addPathPatterns("/");
         registry.addInterceptor(userIdInterceptor).addPathPatterns("/", "/aihun/**");
     }
