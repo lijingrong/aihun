@@ -64,25 +64,30 @@ public class DrawService {
      * @param userId 用户Id
      * @return Short
      */
+    @Transactional
     public Short draw(String userId) {
-        Draw drawRecord = drawRecordRepository.getTopByUserIdAndIsDraw(userId, Constants.WINNING_PRIZE);
-        if (null != drawRecord) {
-            return Constants.NO_PRIZE;
-        }
-
-        Prize prize = getPrize();
-        Short isDraw = 0;
-        if (prize.getPrizeType().shortValue() != Constants.NO_PRIZE) {
-            Integer updateCount = prizeRepository.updatePrizeRemainCount(prize.getPrizeId());
-            if (updateCount == 0) {
+        try {
+            Draw drawRecord = drawRecordRepository.getTopByUserIdAndIsDraw(userId, Constants.WINNING_PRIZE);
+            if (null != drawRecord) {
                 return Constants.NO_PRIZE;
             }
-            isDraw = 1;
+
+            Prize prize = getPrize();
+            Short isDraw = 0;
+            if (prize.getPrizeType().shortValue() != Constants.NO_PRIZE) {
+                Integer updateCount = prizeRepository.updatePrizeRemainCount(prize.getPrizeId());
+                if (updateCount == 0) {
+                    return Constants.NO_PRIZE;
+                }
+                isDraw = 1;
+            }
+
+            Draw draw = new Draw(UUID.randomUUID().toString(), userId, prize.getPrizeId(), isDraw);
+            drawRecordRepository.save(draw);
+
+            return prize.getPrizeType();
+        } catch (Exception e) {
+            return Constants.NO_PRIZE;
         }
-
-        Draw draw = new Draw(UUID.randomUUID().toString(), userId, prize.getPrizeId(), isDraw);
-        drawRecordRepository.save(draw);
-
-        return prize.getPrizeType();
     }
 }

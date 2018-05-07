@@ -75,6 +75,6 @@ CREATE TABLE t_draw (
   is_draw TINYINT NOT NULL DEFAULT 0 COMMENT '是否中奖，1-是，0-否',
   draw_time DATETIME NOT NULL COMMENT '抽奖时间',
   PRIMARY KEY (draw_id),
-  KEY t_draw_record_user_id (user_id) USING BTREE,
-  KEY t_draw_record_prize_id (prize_id) USING BTREE
+  UNIQUE KEY t_draw_user_id (user_id, is_draw) USING BTREE,
+  KEY t_draw_prize_id (prize_id) USING BTREE
 );
