@@ -20,18 +20,6 @@ public class DrawService {
     private DrawRepository drawRecordRepository;
 
     /**
-     * 保存抽奖及更新奖品剩余数
-     *
-     * @param draw  抽奖对象
-     * @param prize 奖品对象
-     */
-    @Transactional
-    public void saveDrawPrize(Draw draw, Prize prize) {
-        drawRecordRepository.save(draw);
-        prizeRepository.save(prize);
-    }
-
-    /**
      * 获取中奖奖品，如果用户已中过奖，再次抽奖则不中奖
      *
      * @return Prize
@@ -82,20 +70,18 @@ public class DrawService {
             return Constants.NO_PRIZE;
         }
 
-        Prize prize = prizeRepository.getOne(getPrize().getPrizeId());
+        Prize prize = getPrize();
         Short isDraw = 0;
         if (prize.getPrizeType().shortValue() != Constants.NO_PRIZE) {
-            if (prize.getRemainCount() <= 0) {
+            Integer updateCount = prizeRepository.updatePrizeRemainCount(prize.getPrizeId());
+            if (updateCount == 0) {
                 return Constants.NO_PRIZE;
             }
-            int remainCount = prize.getRemainCount() - 1;
-            prize.setRemainCount((short) remainCount);
             isDraw = 1;
         }
 
         Draw draw = new Draw(UUID.randomUUID().toString(), userId, prize.getPrizeId(), isDraw);
-
-        saveDrawPrize(draw, prize);
+        drawRecordRepository.save(draw);
 
         return prize.getPrizeType();
     }
