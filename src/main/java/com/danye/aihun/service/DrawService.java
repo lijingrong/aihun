@@ -73,17 +73,14 @@ public class DrawService {
             }
 
             Prize prize = getPrize();
-            Short isDraw = 0;
             if (prize.getPrizeType().shortValue() != Constants.NO_PRIZE) {
                 Integer updateCount = prizeRepository.updatePrizeRemainCount(prize.getPrizeId());
                 if (updateCount == 0) {
                     return Constants.NO_PRIZE;
                 }
-                isDraw = 1;
+                Draw draw = new Draw(UUID.randomUUID().toString(), userId, prize.getPrizeId(), (short) 1);
+                drawRecordRepository.save(draw);
             }
-
-            Draw draw = new Draw(UUID.randomUUID().toString(), userId, prize.getPrizeId(), isDraw);
-            drawRecordRepository.save(draw);
 
             return prize.getPrizeType();
         } catch (Exception e) {
