@@ -10,10 +10,13 @@ import com.danye.aihun.service.WXTokenService;
 import com.danye.aihun.utils.OSSUtil;
 import com.danye.aihun.utils.QRCodeUtil;
 import com.danye.aihun.utils.UserIdHolder;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -109,6 +112,29 @@ public class IndexController {
         return result;
     }
 
+    @MessageMapping("/buildGameTeam")
+    @SendTo("/topic/pushGameTeam")
+    public Map<String, Object> buildGameTeam(@RequestBody Map<String,Object> data) throws Exception {
+        String uid  = MapUtils.getString(data,"uid");
+        String userId = MapUtils.getString(data,"userId");
+        Map<String, Object> result = new HashMap<>();
+        if (StringUtils.isEmpty(uid)) {
+            result.put("code", 0);
+            return result;
+        }
+        GameTeam gameTeam = gameTeamService.getLatestGameTeamByUid(uid);
+        if (gameTeam == null) {
+            result.put("code", 0);
+            result.put("uid", userId);
+        } else {
+            gameTeam.setFollowId(userId);
+            gameTeamService.save(gameTeam);
+            result.put("code", 1);
+            result.put("data", gameTeam);
+        }
+        return result;
+    }
+
     @RequestMapping("/aihun/isFollowerJoin")
     @ResponseBody
     public ResponseCode isFollowerJoin(@RequestParam("gameTeamId") String gameTeamId) {
@@ -119,6 +145,8 @@ public class IndexController {
             return ResponseCode.FAILURE;
         return ResponseCode.SUCCESS;
     }
+
+
 
     @PostMapping("/aihun/postSharkTime")
     @ResponseBody
