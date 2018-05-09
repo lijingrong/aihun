@@ -1,7 +1,9 @@
 package com.danye.aihun.service;
 
 import com.danye.aihun.model.Draw;
+import com.danye.aihun.model.DrawNot;
 import com.danye.aihun.model.Prize;
+import com.danye.aihun.repository.DrawNotRepository;
 import com.danye.aihun.repository.DrawRepository;
 import com.danye.aihun.repository.PrizeRepository;
 import com.danye.aihun.utils.Constants;
@@ -17,7 +19,9 @@ public class DrawService {
     @Autowired
     private PrizeRepository prizeRepository;
     @Autowired
-    private DrawRepository drawRecordRepository;
+    private DrawRepository drawRepository;
+    @Autowired
+    private DrawNotRepository drawNotRepository;
 
     /**
      * 获取中奖奖品，如果用户已中过奖，再次抽奖则不中奖
@@ -67,7 +71,7 @@ public class DrawService {
     @Transactional
     public Short draw(String userId) {
         try {
-            Draw drawRecord = drawRecordRepository.getTopByUserIdAndIsDraw(userId, Constants.WINNING_PRIZE);
+            Draw drawRecord = drawRepository.getTopByUserIdAndIsDraw(userId, Constants.WINNING_PRIZE);
             if (null != drawRecord) {
                 return Constants.NO_PRIZE;
             }
@@ -79,7 +83,10 @@ public class DrawService {
                     return Constants.NO_PRIZE;
                 }
                 Draw draw = new Draw(UUID.randomUUID().toString(), userId, prize.getPrizeId(), (short) 1);
-                drawRecordRepository.save(draw);
+                drawRepository.save(draw);
+            } else {
+                DrawNot drawNot = new DrawNot(UUID.randomUUID().toString(), userId, prize.getPrizeId(), (short) 0);
+                drawNotRepository.save(drawNot);
             }
 
             return prize.getPrizeType();

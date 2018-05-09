@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS t_wechat_jsapi_ticket;
 DROP TABLE IF EXISTS t_wechat_oauth_code;
 DROP TABLE IF EXISTS t_prize;
 DROP TABLE IF EXISTS t_draw;
+DROP TABLE IF EXISTS t_draw_not;
 
 CREATE TABLE t_contact (
   uid   VARCHAR(50) NOT NULL PRIMARY KEY,
@@ -77,4 +78,13 @@ CREATE TABLE t_draw (
   PRIMARY KEY (draw_id),
   UNIQUE KEY t_draw_user_id (user_id, is_draw) USING BTREE,
   KEY t_draw_prize_id (prize_id) USING BTREE
+);
+
+CREATE TABLE t_draw_not (
+  draw_id VARCHAR(100) NOT NULL COMMENT '抽奖记录表Id',
+  user_id VARCHAR(100) NOT NULL COMMENT '用户Id',
+  prize_id VARCHAR(100) NOT NULL COMMENT '奖品Id',
+  is_draw TINYINT NOT NULL DEFAULT 0 COMMENT '是否中奖，1-是，0-否',
+  draw_time DATETIME NOT NULL COMMENT '抽奖时间',
+  PRIMARY KEY (draw_id)
 );
