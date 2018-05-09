@@ -86,7 +86,7 @@ public class IndexController {
         gameTeam.setUid(uid);
         gameTeamService.save(gameTeam);
         Map<String, String> result = new HashMap<>();
-        result.put("imgUrl", "http://aihun-img.oss-cn-shanghai.aliyuncs.com/" + imgName);
+        result.put("imgUrl", "http://aihun-img-hz.oss-cn-hangzhou.aliyuncs.com/" + imgName);
         result.put("gameTeamId", gameTeam.getId());
         return result;
     }

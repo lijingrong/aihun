@@ -26,7 +26,7 @@ public class UserService {
     }
 
     public User getUser(String userId) {
-        return userRepository.getOne(userId);
+        return userRepository.getUserByUserId(userId);
     }
 
     public User getUserByOpenId(String openId) {

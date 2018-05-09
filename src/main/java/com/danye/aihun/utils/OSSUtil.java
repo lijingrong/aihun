@@ -16,11 +16,13 @@ public class OSSUtil {
     public static String upload(InputStream is, String postfix) {
         String ossImgName = DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + getFourRandom()
                 + "." + postfix;
+
+        // TODO 服务器上传OSS用内网，本地测试用外网
         // endpoint以杭州为例，其它region请按实际情况填写
         //内网
-        //String endpoint = "oss-cn-shanghai-internal.aliyuncs.com";
+        String endpoint = "oss-cn-hangzhou-internal.aliyuncs.com";
         //外网
-        String endpoint = "oss-cn-shanghai.aliyuncs.com";
+//        String endpoint = "oss-cn-hangzhou.aliyuncs.com";
 
         // accessKey请登录https://ak-console.aliyun.com/#/查看
         String accessKeyId = "LTAIo5b7drpOb4A9";
@@ -28,7 +30,7 @@ public class OSSUtil {
         // 创建OSSClient实例
         OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
         // 上传文件流
-        ossClient.putObject("aihun-img", ossImgName, is);
+        ossClient.putObject("aihun-img-hz", ossImgName, is);
         // 关闭client
         ossClient.shutdown();
         return ossImgName;
