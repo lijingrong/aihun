@@ -65,7 +65,7 @@ public class WXCoreService {
                 }
             } else {
                 // 当用户发消息时
-                responseContent = "单页表单欢迎您！";
+                responseContent = new String(environment.getProperty("RESP_FIXED_TEXT_CONTENT").getBytes("ISO-8859-1"), "UTF-8");
                 wxRespTextMessage.setContent(responseContent);
                 responseXml = wxMessageUtil.messageToXml(wxRespTextMessage);
             }
