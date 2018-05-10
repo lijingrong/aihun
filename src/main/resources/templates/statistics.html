@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title>爱混食验室</title>
+</head>
+<body>
+<h2>查询时间：</h2><h3 th:text="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}"></h3><br>
+<h2>一等奖已抽中个数：</h2><h3 th:text="${firstPrizeCount}"></h3><br>
+<h2>二等奖已抽中个数：</h2><h3 th:text="${secondPrizeCount}"></h3><br>
+<h2>三等奖已抽中个数：</h2><h3 th:text="${thirdPrizeCount}"></h3><br>
+<h2>点击数：</h2><h3 th:text="${accessCount}"></h3>
+</body>
+</html>

@@ -2,6 +2,7 @@ package com.danye.aihun.repository;
 
 import com.danye.aihun.model.Draw;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,4 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface DrawRepository extends JpaRepository<Draw, String> {
 
     Draw getTopByUserIdAndIsDraw(String userId, Short isDraw);
+
+    @Query(value = " SELECT COUNT(*) FROM t_draw WHERE prize_id = ?1 ", nativeQuery = true)
+    Integer getDrawCountByPrizeId(String prizeId);
 }

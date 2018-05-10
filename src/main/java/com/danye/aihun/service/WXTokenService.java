@@ -154,4 +154,8 @@ public class WXTokenService {
         }
         return wxOauthCode;
     }
+
+    public Long getWechatOauthCodeCount() {
+        return wxOauthCodeRepository.count();
+    }
 }

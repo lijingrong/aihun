@@ -114,9 +114,9 @@ public class IndexController {
 
     @MessageMapping("/buildGameTeam")
     @SendTo("/topic/pushGameTeam")
-    public Map<String, Object> buildGameTeam(@RequestBody Map<String,Object> data) throws Exception {
-        String uid  = MapUtils.getString(data,"uid");
-        String userId = MapUtils.getString(data,"userId");
+    public Map<String, Object> buildGameTeam(@RequestBody Map<String, Object> data) throws Exception {
+        String uid = MapUtils.getString(data, "uid");
+        String userId = MapUtils.getString(data, "userId");
         Map<String, Object> result = new HashMap<>();
         if (StringUtils.isEmpty(uid)) {
             result.put("code", 0);
@@ -145,7 +145,6 @@ public class IndexController {
             return ResponseCode.FAILURE;
         return ResponseCode.SUCCESS;
     }
-
 
 
     @PostMapping("/aihun/postSharkTime")
@@ -242,6 +241,15 @@ public class IndexController {
     @RequestMapping("/noWechat")
     public String noWechat() {
         return "noWechat";
+    }
+
+    @RequestMapping("/statistics")
+    public String statistics(Model model) {
+        model.addAttribute("firstPrizeCount", drawService.getDrawCountByPrizeId("1234567890"));
+        model.addAttribute("secondPrizeCount", drawService.getDrawCountByPrizeId("1234567891"));
+        model.addAttribute("thirdPrizeCount", drawService.getDrawCountByPrizeId("1234567892"));
+        model.addAttribute("accessCount", wxTokenService.getWechatOauthCodeCount());
+        return "statistics";
     }
 
 }

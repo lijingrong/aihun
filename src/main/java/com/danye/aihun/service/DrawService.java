@@ -94,4 +94,8 @@ public class DrawService {
             return Constants.NO_PRIZE;
         }
     }
+
+    public Integer getDrawCountByPrizeId(String prizeId) {
+        return drawRepository.getDrawCountByPrizeId(prizeId);
+    }
 }
