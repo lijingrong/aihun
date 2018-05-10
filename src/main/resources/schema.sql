@@ -28,13 +28,13 @@ CREATE TABLE t_game_team (
 CREATE TABLE t_user_info (
   user_id VARCHAR(100) NOT NULL COMMENT '用户Id',
   open_id VARCHAR(100) NOT NULL COMMENT '微信openId',
-  nick_name VARCHAR(255) NOT NULL COMMENT '昵称',
-  gender TINYINT NOT NULL COMMENT '性别，0-女，1-男',
+  nick_name VARCHAR(255) NULL COMMENT '昵称',
+  gender TINYINT NULL COMMENT '性别，0-女，1-男',
   country VARCHAR(100) NULL COMMENT '国家',
   province VARCHAR(255) NULL COMMENT '省份',
   city VARCHAR(255) NULL COMMENT '城市',
   avatar_url VARCHAR(255) NULL COMMENT '用户头像',
-  create_time DATETIME DEFAULT NULL COMMENT '创建时间',
+  create_time DATETIME NULL COMMENT '创建时间',
   PRIMARY KEY (user_id),
   UNIQUE KEY t_user_info_open_id (open_id) USING BTREE
 );
