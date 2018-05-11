@@ -13,6 +13,6 @@ public interface DrawRepository extends JpaRepository<Draw, String> {
 
     Draw getTopByUserIdAndIsDraw(String userId, Short isDraw);
 
-    @Query(value = " SELECT COUNT(*) FROM t_draw WHERE prize_id = ?1 ", nativeQuery = true)
+    @Query(value = " SELECT COUNT(*) FROM t_draw td, t_contact tc WHERE td.user_id = tc.uid AND td.prize_id = ?1 ", nativeQuery = true)
     Integer getDrawCountByPrizeId(String prizeId);
 }

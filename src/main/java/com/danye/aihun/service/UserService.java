@@ -18,10 +18,6 @@ public class UserService {
     private UserRepository userRepository;
 
     public void saveUser(User user) {
-        if (null == user.getUserId()) {
-            user.setUserId(UUID.randomUUID().toString());
-            user.setCreateTime(new Date());
-        }
         userRepository.save(user);
     }
 
